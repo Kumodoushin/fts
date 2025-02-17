@@ -14,6 +14,10 @@ var airports = new List<Airport>();
 foreach (var file in files)
 {
 	var airportData = JsonConvert.DeserializeObject<AirportJson>(file.OpenText().ReadToEnd());
+	if (airportData.Iata_Code.Length != 3)
+	{
+		continue;
+	}
 	airports.Add(new()
 	{
 		IATA = airportData.Iata_Code, 
@@ -28,6 +32,7 @@ foreach (var file in files)
 }
 Console.WriteLine($"Processed {airports.Count} airports");
 
+File.WriteAllText("AllAirports.json", JsonConvert.SerializeObject(airports));
 //OC, NA, EU, AF, SA, AS
 Console.WriteLine("done");
 Console.ReadLine();
