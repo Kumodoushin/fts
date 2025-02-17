@@ -9,7 +9,7 @@ public struct Price
 
 	public Price(decimal valueEuro)
 	{
-		if (_valueEuro < _minPrice)
+		if (valueEuro < _minPrice)
 		{
 			throw new ArgumentException($"Min price must be {_minPrice}");
 		}

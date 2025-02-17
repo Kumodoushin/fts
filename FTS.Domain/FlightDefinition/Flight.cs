@@ -36,6 +36,7 @@ public class Flight
 
 	public IEnumerable<Instance> NextFlightInstances(int amount, DateTimeOffset onOrAfter)
 	{
+		var results = new List<Instance>();
 		var currentDate = DateOnly.FromDateTime(onOrAfter.LocalDateTime);
 		for (int i = 0; i < amount; i++)
 		{
@@ -52,9 +53,11 @@ public class Flight
 					_departure,
 					onOrAfter.Offset),
 				_destinationAirport);
-			yield return flightInstance;
+			results.Add(flightInstance);
+			currentDate = currentDate.AddDays(1);
 		}
-		
+
+		return results;
 	}
 	public class Instance
 	{

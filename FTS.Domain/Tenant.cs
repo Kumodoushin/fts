@@ -7,10 +7,18 @@ public abstract class Tenant
 	private Dictionary<DateOnly, Flight.PricedInstance> _pricedReservations;
 	private List<Flight.PricedInstance> _boughtTickets;
 
-	protected Tenant(DateOnly currentDate, Guid id, DateOnly dateOfBirth, Dictionary<DateOnly,Flight.Instance> reservations)
+	protected Tenant(
+		DateOnly currentDate,
+		Guid id,
+		DateOnly dateOfBirth,
+		Dictionary<DateOnly,Flight.Instance> reservations,
+		Dictionary<DateOnly, Flight.PricedInstance> pricedReservations,
+		List<Flight.PricedInstance> boughtTickets)
 	{
 		_currentDate = currentDate;
 		_reservations = reservations;
+		_pricedReservations = pricedReservations;
+		_boughtTickets = boughtTickets;
 		Id = id;
 		DateOfBirth = dateOfBirth;
 	}
@@ -44,9 +52,15 @@ public abstract class Tenant
 	{
 		private Dictionary<Flight.Instance, List<Discount>> _discounts;
 
-		public A(DateOnly currentDate, Guid id, DateOnly dateOfBirth, Dictionary<DateOnly,Flight.Instance> reservations) : base(currentDate, id,dateOfBirth,reservations)
+		public A(
+			DateOnly currentDate,
+			Guid id,
+			DateOnly dateOfBirth,
+			Dictionary<DateOnly,Flight.Instance> reservations,
+			Dictionary<DateOnly,Flight.PricedInstance> pricedReservations,
+			List<Flight.PricedInstance> boughtTickets)
+			: base(currentDate, id, dateOfBirth, reservations, pricedReservations, boughtTickets)
 		{
-			
 		}
 
 		protected override void LogDiscounts(Flight.Instance instance, Price price)
@@ -57,7 +71,14 @@ public abstract class Tenant
 	
 	public sealed class B : Tenant
 	{
-		public B(DateOnly currentDate, Guid id, DateOnly dateOfBirth, Dictionary<DateOnly,Flight.Instance> reservations) : base(currentDate, id,dateOfBirth,reservations)
+		public B(
+			DateOnly currentDate,
+			Guid id,
+			DateOnly dateOfBirth,
+			Dictionary<DateOnly,Flight.Instance> reservations,
+			Dictionary<DateOnly,Flight.PricedInstance> pricedReservations,
+			List<Flight.PricedInstance> boughtTickets)
+			: base(currentDate, id, dateOfBirth, reservations, pricedReservations, boughtTickets)
 		{
 			
 		}
