@@ -74,18 +74,18 @@ public class FlightIdTests
 			Add(typeof(FlightId.InvalidInputIdFormat), "K B");
 			Add(typeof(FlightId.InvalidInputIdFormat), "KLM 123456 BCAA extrabits");
 
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KLMA 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KLMBA 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KA 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"A 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"KLMA 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"KLMBA 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"KA 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"A 00001 BCA");
 			
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KLm 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KlM 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"kLM 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"1LM 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"K2M 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KL3 00001 BCA");
-			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KLą 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"KLm 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"KlM 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"kLM 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"1LM 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"K2M 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"KL3 00001 BCA");
+			Add(typeof(FlightId.InvalidICAOAirlineCodeFormat), $"KLą 00001 BCA");
 			
 			Add(typeof(FlightId.InvalidFlightNumberValue), $"KLM wrongValue BCA");
 			Add(typeof(FlightId.InvalidFlightNumberValue), $"KLM 00000 BCA");
