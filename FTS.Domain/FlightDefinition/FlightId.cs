@@ -5,8 +5,9 @@ public struct FlightId
 	private readonly string _IATAAirlineSegment;
 	private readonly int _number;
 	private readonly string _postfix;
-	private static bool AnyOfCharsIsNotAsciiUpperLetter(string value) =>
-		!char.IsAsciiLetterUpper(value[0]) 
+	private static bool IsOfInvalidLengthOrContainsNonAsciiUpperLetter(string value) =>
+		value.Length != 3
+		|| !char.IsAsciiLetterUpper(value[0]) 
 		|| !char.IsAsciiLetterUpper(value[1]) 
 		|| !char.IsAsciiLetterUpper(value[2]);
 
@@ -18,30 +19,20 @@ public struct FlightId
 			throw new InvalidInputIdFormat();
 		}
 
-		if (segments[0].Length != 3)
+		if (IsOfInvalidLengthOrContainsNonAsciiUpperLetter(segments[0]))
 		{
-			throw new InvalidIATAAirlineCodeFormat();
-		}
-		if (AnyOfCharsIsNotAsciiUpperLetter(segments[0]))
-		{
-			throw new InvalidSegmentFormat(segments[0]);
+			throw new InvalidIATAAirlineCodeFormat(segments[0]);
 		}
 		_IATAAirlineSegment = segments[0];
-		
-		_number = int.Parse(segments[1]);
-		if (_number is > 99999 or < 1)
+
+		if (!int.TryParse(segments[1], out _number) || _number is > 99999 or < 1)
 		{
-			throw new InvalidFlightNumberValue();
-		}
-		
-		if (segments[2].Length != 3)
-		{
-			throw new InvalidFinalSegmentLength();
+			throw new InvalidFlightNumberValue(segments[1]);
 		}
 
-		if (AnyOfCharsIsNotAsciiUpperLetter(segments[2]))
+		if (IsOfInvalidLengthOrContainsNonAsciiUpperLetter(segments[2]))
 		{
-			throw new InvalidSegmentFormat(segments[2]);
+			throw new InvalidFinalSegmentValue(segments[2]);
 		}
 		_postfix = segments[2];
 	}
@@ -64,32 +55,24 @@ public struct FlightId
 
 	public class InvalidFlightNumberValue : Exception
 	{
-		public InvalidFlightNumberValue() :
-			base ("Second part of FlightId, the Flight number must be greater than 0 and less than 100'000")
+		public InvalidFlightNumberValue(string value) :
+			base ($"Second part of FlightId, the Flight number must be greater than 0 and less than 100'000. Provided value: \"{value}\"")
 		{
 		}
 	}
 
-	public class InvalidSegmentFormat : Exception
+	public class InvalidFinalSegmentValue : Exception
 	{
-		public InvalidSegmentFormat(string value) : 
-			base($"Provided value \"{value}\" does not match the 3 letter format")
-		{
-		}
-	}
-
-	public class InvalidFinalSegmentLength : Exception
-	{
-		public InvalidFinalSegmentLength() : 
-			base("Last segment of FlightId, must have 3 letters")
+		public InvalidFinalSegmentValue(string value) : 
+			base($"Last segment of FlightId, must have 3 letters. Provided value: {value}")
 		{
 		}
 	}
 
 	public class InvalidIATAAirlineCodeFormat : Exception
 	{
-		public InvalidIATAAirlineCodeFormat() : 
-			base("First part of FlightId, the IATA Airline Code must have 3 letters")
+		public InvalidIATAAirlineCodeFormat(string value) :
+			base($"First part of FlightId, the IATA Airline Code must have 3 letters. Provided value: \"{value}\"")
 		{
 		}
 	}

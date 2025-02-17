@@ -79,19 +79,19 @@ public class FlightIdTests
 			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KA 00001 BCA");
 			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"A 00001 BCA");
 			
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLm 00001 BCA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KlM 00001 BCA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"kLM 00001 BCA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"1LM 00001 BCA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"K2M 00001 BCA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KL3 00001 BCA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLą 00001 BCA");
+			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KLm 00001 BCA");
+			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KlM 00001 BCA");
+			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"kLM 00001 BCA");
+			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"1LM 00001 BCA");
+			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"K2M 00001 BCA");
+			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KL3 00001 BCA");
+			Add(typeof(FlightId.InvalidIATAAirlineCodeFormat), $"KLą 00001 BCA");
 			
+			Add(typeof(FlightId.InvalidFlightNumberValue), $"KLM wrongValue BCA");
 			Add(typeof(FlightId.InvalidFlightNumberValue), $"KLM 00000 BCA");
 			Add(typeof(FlightId.InvalidFlightNumberValue), $"KLM 100001 BCA");
 			var f = new Faker();
 			var rnd = f.Random;
-			
 			for (int i = 0; i < 100; i++)
 			{
 				Add(typeof(FlightId.InvalidFlightNumberValue), $"KLM {rnd.Int(100_000, Int32.MaxValue)} BCA");
@@ -101,18 +101,17 @@ public class FlightIdTests
 				Add(typeof(FlightId.InvalidFlightNumberValue), $"KLM {rnd.Int(Int32.MinValue, 0)} BCA");
 			}
 			
-			Add(typeof(FlightId.InvalidFinalSegmentLength), $"KLM 00001 BCAC");
-			Add(typeof(FlightId.InvalidFinalSegmentLength), $"KLM 00001 BCABC");
-			Add(typeof(FlightId.InvalidFinalSegmentLength), $"KLM 00001 BC");
-			Add(typeof(FlightId.InvalidFinalSegmentLength), $"KLM 00001 B");
-			
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLM 00001 bCA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLM 00001 BcA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLM 00001 BCa");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLM 00001 1CA");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLM 00001 B2A");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLM 00001 BC3");
-			Add(typeof(FlightId.InvalidSegmentFormat), $"KLM 00001 BCą");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 BCAC");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 BCABC");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 BC");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 B");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 bCA");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 BcA");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 BCa");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 1CA");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 B2A");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 BC3");
+			Add(typeof(FlightId.InvalidFinalSegmentValue), $"KLM 00001 BCą");
 			
 		}
 	}
