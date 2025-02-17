@@ -1,4 +1,5 @@
-﻿namespace FTS.Domain;
+﻿using OneOf;
+namespace FTS.Domain;
 
 public class Airport
 {
@@ -12,7 +13,7 @@ public class Airport
 		{
 			if (HasInvalidLengthOrContainsNonAsciiUpperLetter(value))
 			{
-				throw new InvalidIATAAirportCodeFormat();
+				throw new InvalidIATAAirportCodeFormat(value);
 			}
 			_iata = value;
 		}
@@ -25,7 +26,7 @@ public class Airport
 		{
 			if (HasInvalidLengthOrContainsNonAsciiUpperLetterOrDigit(value))
 			{
-				throw new InvalidICAOAirportCodeFormat();
+				throw new InvalidICAOAirportCodeFormat(value);
 			}
 			_icao = value;
 		}
@@ -46,23 +47,52 @@ public class Airport
 	
 	private static bool HasInvalidLengthOrContainsNonAsciiUpperLetterOrDigit(string value) =>
 		value.Length != 4
-		|| !char.IsAsciiLetterUpper(value[0]) || !char.IsAsciiDigit(value[0]) 
-		|| !char.IsAsciiLetterUpper(value[1]) || !char.IsAsciiDigit(value[1]) 
-		|| !char.IsAsciiLetterUpper(value[2]) || !char.IsAsciiDigit(value[2])
-		|| !char.IsAsciiLetterUpper(value[3]) || !char.IsAsciiDigit(value[3]);
+		|| !(char.IsAsciiLetterUpper(value[0]) || char.IsAsciiDigit(value[0])) 
+		|| !(char.IsAsciiLetterUpper(value[1]) || char.IsAsciiDigit(value[1])) 
+		|| !(char.IsAsciiLetterUpper(value[2]) || char.IsAsciiDigit(value[2]))
+		|| !(char.IsAsciiLetterUpper(value[3]) || char.IsAsciiDigit(value[3]));
 	
 	public class InvalidIATAAirportCodeFormat : Exception
 	{
-		public InvalidIATAAirportCodeFormat() : 
-			base("IATA airport code must have 3 uppercase letters")
+		public InvalidIATAAirportCodeFormat(string value) : 
+			base($"IATA airport code must have 3 uppercase letters. Value: \"{value}\"")
 		{
 		}
 	}
 	
 	public class InvalidICAOAirportCodeFormat : Exception
 	{
-		public InvalidICAOAirportCodeFormat() : 
-			base("ICAO airport code must have 4 uppercase letters and digits")
+		public InvalidICAOAirportCodeFormat(string value) : 
+			base($"ICAO airport code must have 4 uppercase letters and digits. Value: \"{value}\"")
+		{
+		}
+	}
+}
+
+public class Airports
+{
+	private readonly Dictionary<string,Airport> _airports;
+
+	public Airports(List<Airport> airports)
+	{
+		_airports = new Dictionary<string, Airport>();
+		foreach (var airport in airports)
+		{
+			_airports.Add(airport.IATA,airport);
+		}
+	}
+
+	public OneOf<Airport,AirportNotFound> GetByIATA(string iata)
+	{
+		var success = _airports.TryGetValue(iata, out var value);
+
+		return success ? value : new AirportNotFound(iata);
+	}
+
+	public class AirportNotFound : Exception
+	{
+		public AirportNotFound(string iata) :
+			base($"Could not find Airport with code \"{iata}\"")
 		{
 		}
 	}

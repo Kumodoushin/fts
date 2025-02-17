@@ -2,7 +2,7 @@
 
 public struct FlightId
 {
-	private readonly string _IATAAirlineSegment;
+	private readonly string _ICAOAirlineSegment;
 	private readonly int _number;
 	private readonly string _postfix;
 	private static bool IsOfInvalidLengthOrContainsNonAsciiUpperLetter(string value) =>
@@ -21,9 +21,9 @@ public struct FlightId
 
 		if (IsOfInvalidLengthOrContainsNonAsciiUpperLetter(segments[0]))
 		{
-			throw new InvalidIATAAirlineCodeFormat(segments[0]);
+			throw new InvalidICAOAirlineCodeFormat(segments[0]);
 		}
-		_IATAAirlineSegment = segments[0];
+		_ICAOAirlineSegment = segments[0];
 
 		if (!int.TryParse(segments[1], out _number) || _number is > 99999 or < 1)
 		{
@@ -37,9 +37,9 @@ public struct FlightId
 		_postfix = segments[2];
 	}
 
-	public override string ToString() => $"{_IATAAirlineSegment} {_number:D5} {_postfix}";
+	public override string ToString() => $"{_ICAOAirlineSegment} {_number:D5} {_postfix}";
 
-	public override int GetHashCode() => HashCode.Combine(_IATAAirlineSegment,_number,_postfix);
+	public override int GetHashCode() => HashCode.Combine(_ICAOAirlineSegment,_number,_postfix);
 
 	public override bool Equals(object? obj) => 
 		obj is not null 
@@ -47,7 +47,7 @@ public struct FlightId
 		&& this == otherFlight;
 
 	public static bool operator ==(FlightId a, FlightId b) =>
-		a._IATAAirlineSegment == b._IATAAirlineSegment 
+		a._ICAOAirlineSegment == b._ICAOAirlineSegment 
 		&& a._number == b._number 
 		&& a._postfix == b._postfix;
 
@@ -69,10 +69,10 @@ public struct FlightId
 		}
 	}
 
-	public class InvalidIATAAirlineCodeFormat : Exception
+	public class InvalidICAOAirlineCodeFormat : Exception
 	{
-		public InvalidIATAAirlineCodeFormat(string value) :
-			base($"First part of FlightId, the IATA Airline Code must have 3 letters. Provided value: \"{value}\"")
+		public InvalidICAOAirlineCodeFormat(string value) :
+			base($"First part of FlightId, the ICAO Airline Code must have 3 letters. Provided value: \"{value}\"")
 		{
 		}
 	}
