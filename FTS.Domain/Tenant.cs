@@ -19,14 +19,17 @@ public abstract class Tenant
 
 	public DateOnly DateOfBirth { get; }
 
-	public void AddReservationFor(Flight.Instance flightInstance)
+	public Flight.Instance AddReservationFor(Flight.Instance flightInstance)
 	{
 		_reservations.Add(_currentDate,flightInstance);
+
+		return flightInstance;
 	}
-	public void AddPricedFlight(Flight.PricedInstance pricedFlight, DateOnly currentDate)
+	public Flight.PricedInstance AddPricedFlight(Flight.PricedInstance pricedFlight, DateOnly currentDate)
 	{
 		_pricedReservations.Add(_currentDate,pricedFlight);
-		
+
+		return pricedFlight;
 	}
 
 	public void FinalizeBuy(Flight.PricedInstance pricedInstance)
