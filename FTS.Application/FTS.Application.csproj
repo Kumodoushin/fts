@@ -11,11 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="AddFlightDefinition" />
-      <Folder Include="AddNewDiscount" />
-      <Folder Include="BuyFlightById" />
-      <Folder Include="CalculateTicketPrice" />
-      <Folder Include="PriceFlightDefinition" />
+      <PackageReference Include="OneOf" Version="3.0.271" />
     </ItemGroup>
 
 </Project>
